@@ -4,7 +4,9 @@
   "description": "Node script to generate NSIS.docset",
   "author": "Jan T. Sott",
   "license": "MIT",
-  "private": true,
+  "engines": {
+    "node": "^6.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/idleberg/nsis-docset-builder"
