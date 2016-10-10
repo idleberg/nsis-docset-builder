@@ -5,10 +5,7 @@
 [![David](https://img.shields.io/david/idleberg/nsis-docset-builder.svg?style=flat-square)](https://david-dm.org/idleberg/nsis-docset-builder)
 [![David](https://img.shields.io/david/dev/idleberg/nsis-docset-builder.svg?style=flat-square)](https://david-dm.org/idleberg/nsis-docset-builder?type=dev)
 
-  "description": "Node script to generate NSIS.docset",
-Adds commands that let you quickly browse Atom-related folders or reveal files you're working on ([details below](#usage))
-
-![Screenshot](https://raw.githubusercontent.com/idleberg/atom-browse/master/screenshot.gif)
+Node script to generate [NSIS.docset](https://github.com/idleberg/NSIS.docset)
 
 ## Usage
 
@@ -34,4 +31,4 @@ This work is licensed under the [The MIT License](LICENSE.md).
 
 ## Donate
 
-You are welcome support this project using [Flattr](https://flattr.com/submit/auto?user_id=idleberg&url=https://github.com/idleberg/atom-browse) or Bitcoin `17CXJuPsmhuTzFV2k4RKYwpEHVjskJktRd`
+You are welcome support this project using [Flattr](https://flattr.com/submit/auto?user_id=idleberg&url=https://github.com/idleberg/nsis-docset-builder) or Bitcoin `17CXJuPsmhuTzFV2k4RKYwpEHVjskJktRd`
