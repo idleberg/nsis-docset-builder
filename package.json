@@ -12,10 +12,6 @@
     "type": "git",
     "url": "git+https://github.com/idleberg/nsis-docset-builder"
   },
-  "dependencies": {
-    "highlight.js": "isagalaev/highlight.js#master",
-    "nsis-docs": "NSIS-Dev/Documentation#master"
-  },
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-cached": "^1.1.0",
@@ -26,8 +22,11 @@
     "gulp-markdown": "^1.0.0",
     "gulp-tap": "^0.1.3",
     "handlebars": "^4.0.5",
+    "highlight.js": "isagalaev/highlight.js#master",
     "mkdirp": "^0.5.1",
     "mozilla-fira-pack": "0.0.1",
-    "sqlite3": "^3.1.6"
+    "nsis-docs": "NSIS-Dev/Documentation#master",
+    "sqlite3": "^3.1.6",
+    "yargs": "^6.0.0"
   }
 }
