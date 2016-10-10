@@ -9,7 +9,7 @@ Node script to generate [NSIS.docset](https://github.com/idleberg/NSIS.docset)
 
 ## Usage
 
-Actually, a simple `gulpfile.js` is used to generate the docset. Make sure you got [Node](nodejs.org) and [Gulp](http://gulpjs.com/) installed.
+Actually, a simple `gulpfile.js` is used to generate the docset. Make sure you got [Node 6](nodejs.org) and [Gulp](http://gulpjs.com/) installed, then follow these steps:
 
 ```bash
 # Clone repository
