@@ -109,8 +109,9 @@ gulp.task('build:db', ['db:init'], function() {
 
         let baseName, cmdName, cmdType, dirName, filePath; 
 
+
         filePath = file.path;
-        dirName = path.dirname(filePath.replace(path.join(__dirname, 'node_modules/nsis-docs'), 'html/'));
+        dirName = path.dirname(filePath.replace(path.join(__dirname, 'node_modules/nsis-docs'), 'html'));
         baseName = path.basename(filePath, '.md');
 
         if (dirName.endsWith('Callbacks') && baseName.startsWith("on")) {
