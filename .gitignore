@@ -1,0 +1,8 @@
+*.dsidx
+*.sqlite
+bower_components/
+NSIS.docset/
+node_modules/
+npm-debug.log*
+todo.md
+vendor/

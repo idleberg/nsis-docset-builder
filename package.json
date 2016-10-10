@@ -1,0 +1,27 @@
+{
+  "name": "NSIS.docset-builder",
+  "version": "0.1.0",
+  "author": "Jan T. Sott",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "highlight.js": "isagalaev/highlight.js#master",
+    "nsis-docs": "NSIS-Dev/Documentation#master"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-cached": "^1.1.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-cssmin": "^0.1.7",
+    "gulp-debug": "^2.1.2",
+    "gulp-htmlmin": "^1.3.0",
+    "gulp-markdown": "^1.0.0",
+    "gulp-tap": "^0.1.3",
+    "handlebars": "^4.0.5",
+    "mozilla-fira-pack": "0.0.1",
+    "sqlite3": "^3.1.6"
+  },
+  "scripts": {
+    "postinstall": "mkdir NSIS.docset && mkdir NSIS.docset/Contents/ && mkdir NSIS.docset/Contents/Resources/"
+  }
+}
