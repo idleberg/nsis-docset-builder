@@ -22,7 +22,7 @@ $ cd nsis-docset-builder
 $ npm install
 
 # Generate docset
-gulp
+$ gulp
 ```
 
 ## License
