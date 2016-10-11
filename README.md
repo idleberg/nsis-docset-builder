@@ -28,7 +28,7 @@ By default, the generated websites use a dark highlighter theme. Use `gulp --the
 
 ## License
 
-This work is licensed under the [The MIT License](LICENSE).
+This work is licensed under the [The MIT License](LICENSE)
 
 ## Donate
 
