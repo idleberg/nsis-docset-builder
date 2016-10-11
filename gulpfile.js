@@ -43,7 +43,7 @@ gulp.task('deploy:hljs', ['build:hljs'],function () {
       ])
     .pipe(cache('hljs'))
     .pipe(concat('highlight.min.js'))
-    .pipe(debug({title: 'cssmin:'}))
+    .pipe(debug({title: 'deploy:hljs'}))
     .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/js/'));
 });
 
@@ -102,7 +102,7 @@ gulp.task('build:css', function () {
     ])
     .pipe(cache('css'))
     .pipe(concat('docset.min.css'))
-    .pipe(debug({title: 'cssmin:'}))
+    .pipe(debug({title: 'cssmin'}))
     .pipe(cssmin())
     .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/css/'));
 });
@@ -118,7 +118,7 @@ gulp.task('build:db', ['db:init'], function() {
         dirName = path.dirname(filePath.replace(path.join(__dirname, 'node_modules/nsis-docs'), 'html'));
         baseName = path.basename(filePath, '.md');
 
-        cmd = transformDocs(dirName, baseName)
+        cmd = transformDocs(dirName, baseName);
 
         db.serialize(function() {
             db.run(`INSERT OR IGNORE INTO searchIndex(name, type, path) VALUES ('${cmd.name}', '${cmd.type}', '${dirName}/${baseName}.html');`);
@@ -171,7 +171,7 @@ gulp.task('build:html', function() {
         file.contents = new Buffer(html, "utf-8");
     }))
     .pipe(htmlmin({collapseWhitespace: true}))
-    .pipe(debug({title: 'build:html:'}))
+    .pipe(debug({title: 'build:html'}))
     .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/html/'));
     }));
 });
@@ -200,7 +200,7 @@ function transformDocs(dirName, baseName) {
             cmd.type = "Command";
             cmd.name = baseName;
         }
-        return cmd
+        return cmd;
 }
 
 
