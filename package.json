@@ -13,6 +13,7 @@
     "url": "git+https://github.com/idleberg/nsis-docset-builder"
   },
   "devDependencies": {
+    "font-awesome": "^4.6.3",
     "gulp": "^3.9.1",
     "gulp-cached": "^1.1.0",
     "gulp-concat": "^2.6.0",

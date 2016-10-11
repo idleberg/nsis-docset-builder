@@ -60,8 +60,10 @@ gulp.task('deploy:font', function () {
         'node_modules/mozilla-fira-pack/Fira/ttf/FiraMono-Regular.ttf',
         'node_modules/mozilla-fira-pack/Fira/ttf/FiraSans-Light.ttf',
         'node_modules/mozilla-fira-pack/Fira/ttf/FiraSans-Regular.ttf',
+
+        'node_modules/font-awesome/fonts/*'
     ])
-    .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/font/'));
+    .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/fonts/'));
 });
 
 
@@ -88,6 +90,7 @@ gulp.task('deploy:plist', function () {
 gulp.task('build:css', function () {
     gulp.src([
         'src/css/fonts.css',
+        'node_modules/font-awesome/css/font-awesome.css',
         'src/css/highlighter.css',
         'src/css/theme.css'
     ])
@@ -106,35 +109,16 @@ gulp.task('build:db', ['db:init'], function() {
         'node_modules/nsis-docs/**/*.md'
         ])
     .pipe(tap(function(file) {
-
-        let baseName, cmdName, cmdType, dirName, filePath; 
-
+        let baseName, cmd, dirName, filePath; 
 
         filePath = file.path;
         dirName = path.dirname(filePath.replace(path.join(__dirname, 'node_modules/nsis-docs'), 'html'));
         baseName = path.basename(filePath, '.md');
 
-        if (dirName.endsWith('Callbacks') && baseName.startsWith("on")) {
-            cmdType = "Function";
-            cmdName = "." + baseName;
-        } else if (dirName.endsWith('Callbacks') && baseName.startsWith("un.on")) {
-            cmdType = "Function";
-            cmdName = baseName;
-        } else if (baseName.startsWith("__") && baseName.endsWith("__")) {
-            cmdType = "Variable";
-            cmdName = "${" + baseName + "}";
-        }  else if (dirName.endsWith('Variables')) {
-            cmdType = "Variable";
-            cmdName = "$" + baseName;
-        } else if (dirName.startsWith('html/Includes')) {
-            cmdType = "Library";
-            cmdName = "${" + baseName + "}";
-        } else {
-            cmdType = "Command";
-            cmdName = baseName;
-        }
+        cmd = transformDocs(dirName, baseName)
+
         db.serialize(function() {
-            db.run(`INSERT OR IGNORE INTO searchIndex(name, type, path) VALUES ('${cmdName}', '${cmdType}', '${dirName}/${baseName}.html');`);
+            db.run(`INSERT OR IGNORE INTO searchIndex(name, type, path) VALUES ('${cmd.name}', '${cmd.type}', '${dirName}/${baseName}.html');`);
         });
     }));
 });
@@ -193,6 +177,33 @@ gulp.task('build:html', function() {
 });
 
 
+// Transforms all special cases
+function transformDocs(dirName, baseName) {
+    let cmd = [];
+
+    if (dirName.endsWith('Callbacks') && baseName.startsWith("on")) {
+            cmd.type = "Function";
+            cmd.name = "." + baseName;
+        } else if (dirName.endsWith('Callbacks') && baseName.startsWith("un.on")) {
+            cmd.type = "Function";
+            cmd.name = baseName;
+        } else if (baseName.startsWith("__") && baseName.endsWith("__")) {
+            cmd.type = "Variable";
+            cmd.name = "${" + baseName + "}";
+        }  else if (dirName.endsWith('Variables')) {
+            cmd.type = "Variable";
+            cmd.name = "$" + baseName;
+        } else if (dirName.startsWith('html/Includes')) {
+            cmd.type = "Library";
+            cmd.name = "${" + baseName + "}";
+        } else {
+            cmd.type = "Command";
+            cmd.name = baseName;
+        }
+        return cmd
+}
+
+
 // Initialize sqlite3 database
 gulp.task('db:init', function() {
     return db.serialize(function() {
@@ -206,7 +217,6 @@ gulp.task('db:init', function() {
 // Build Highlight.js
 // via https://github.com/kilianc/rtail/blob/develop/gulpfile.js#L69
 gulp.task('build:hljs', function (done) {
-
     const spawn = require('child_process').spawn;
     let opts = {
         cwd: __dirname + '/node_modules/highlight.js'
