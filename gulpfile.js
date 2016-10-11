@@ -33,7 +33,7 @@ const docMarkdown = [
 ];
 
 // Tasks
-gulp.task('default', ['deploy:hljs', 'deploy:font', 'deploy:icons', 'deploy:plist', 'build:db', 'build:css', 'build:html']);
+gulp.task('default', ['deploy:hljs', 'deploy:font', 'deploy:icons', 'deploy:plist', 'deploy:static', 'build:db', 'build:css', 'build:html']);
 
 
 // Deploy Highlight.js
@@ -84,6 +84,35 @@ gulp.task('deploy:icons', function () {
 
 
 // Deploy Mozilla Fira
+gulp.task('deploy:static', function () {
+    gulp.src([
+        'src/index.html'
+    ])
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(debug({title: 'deploy:static'}))
+    .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/'));
+
+    gulp.src([
+        'src/css/start.css'
+    ])
+    .pipe(cache('css'))
+    .pipe(concat('start.min.css'))
+    .pipe(debug({title: 'deploy:static'}))
+    .pipe(cssmin())
+    .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/css/'));
+
+    // TODO: use logo repository
+    gulp.src([
+        'src/img/logo.png',
+        'src/img/logo.svg'
+    ])
+    .pipe(debug({title: 'deploy:static'}))
+    .pipe(cssmin())
+    .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/img/'));
+});
+
+
+// Deploy Mozilla Fira
 gulp.task('deploy:plist', function () {
     gulp.src([
         'src/Info.plist'
@@ -102,7 +131,7 @@ gulp.task('build:css', function () {
     ])
     .pipe(cache('css'))
     .pipe(concat('docset.min.css'))
-    .pipe(debug({title: 'cssmin'}))
+    .pipe(debug({title: 'build:css'}))
     .pipe(cssmin())
     .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/css/'));
 });
@@ -162,6 +191,7 @@ gulp.task('build:html', function() {
 
         data.assetDepth = "../".repeat(count);
 
+        data.webLink = "https://idleberg.github.io/NSIS.docset/Contents/Resources/Documents/html/" + data.parent + "/" + data.name + ".md";
         data.ghLink = "https://github.com/NSIS-Dev/Documentation/edit/master/" + data.parent + "/" + data.name + ".md";
 
         // we will pass data to the Handlebars template to create the actual HTML to use
