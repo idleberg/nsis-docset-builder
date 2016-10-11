@@ -25,6 +25,12 @@ mkdirp.sync("NSIS.docset/Contents/Resources/");
 // Create database file
 const db = new sqlite3.Database('NSIS.docset/Contents/Resources/docSet.dsidx');
 
+// Specify included Markdown documentation
+const docMarkdown = [
+    '!node_modules/nsis-docs/Plugins/*.md',
+    '!node_modules/nsis-docs/README.md',
+    'node_modules/nsis-docs/**/*.md'
+];
 
 // Tasks
 gulp.task('default', ['deploy:hljs', 'deploy:font', 'deploy:icons', 'deploy:plist', 'build:db', 'build:css', 'build:html']);
@@ -104,10 +110,7 @@ gulp.task('build:css', function () {
 
 // Populate sqlite3 database
 gulp.task('build:db', ['db:init'], function() {
-    return gulp.src([
-        '!node_modules/nsis-docs/README.md',
-        'node_modules/nsis-docs/**/*.md'
-        ])
+    return gulp.src(docMarkdown)
     .pipe(tap(function(file) {
         let baseName, cmd, dirName, filePath; 
 
@@ -133,10 +136,7 @@ gulp.task('build:html', function() {
         
         template = Handlebars.compile(file.contents.toString());
 
-        return gulp.src([
-            '!node_modules/nsis-docs/README.md',
-            'node_modules/nsis-docs/**/*.md'
-            ])
+        return gulp.src(docMarkdown)
         .pipe(markdown())
         .pipe(tap(function(file) {
 
