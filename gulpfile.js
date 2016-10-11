@@ -162,7 +162,7 @@ gulp.task('build:html', function() {
 
         data.assetDepth = "../".repeat(count);
 
-        data.github = "https://github.com/NSIS-Dev/Documentation/edit/master/" + data.parent + "/" + data.name + ".md";
+        data.ghLink = "https://github.com/NSIS-Dev/Documentation/edit/master/" + data.parent + "/" + data.name + ".md";
 
         // we will pass data to the Handlebars template to create the actual HTML to use
         html = template(data);
