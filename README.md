@@ -24,6 +24,8 @@ $ npm install
 $ gulp
 ```
 
+By default, the generated websites use a dark highlighter theme. Use `gulp --theme light` in the last step to use the light theme. 
+
 ## License
 
 This work is licensed under the [The MIT License](LICENSE.md).
