@@ -207,6 +207,7 @@ function transformDocs(filePath) {
     data.prettyName = path.basename(filePath, path.extname(filePath));
 
     data.pageTitle = [ 'NSIS.docset' ];
+    data.bundle = "Core";
 
     if (data.dirName.endsWith('Callbacks') && data.prettyName.startsWith("on")) {
             data.name = "." + data.prettyName;
@@ -226,7 +227,8 @@ function transformDocs(filePath) {
         } else if (data.dirName.startsWith('html/Includes')) {
             data.name = "${" + data.prettyName + "}";
             data.type = "Library";
-            data.pageTitle.push(path.basename(data.dirName) + ".nsh");
+            data.bundle = path.basename(data.dirName + ".nsh");
+            data.pageTitle.push(data.bundle);
         } else {
             data.name = data.prettyName;
             data.type = "Command";
