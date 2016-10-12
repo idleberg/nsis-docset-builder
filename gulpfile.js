@@ -176,16 +176,15 @@ gulp.task('build:html', function() {
             data.highlightStyle = argv.theme;
         }
 
-        data.parent = path.dirname(file.path.substr(__filename.length + 1)).replace("/nsis-docs/", "");
+        parent = path.dirname(file.path.substr(__filename.length + 1)).replace("/nsis-docs/", "");
+        data.relativePath = path.join(parent, data.prettyName);
         data.version = meta.version;
 
-        count = (data.parent.match(/\//g) || []).length + 2;
+        count = (data.relativePath.match(/\//g) || []).length + 1;
         data.assetDepth = "../".repeat(count);
 
-
-        data.webLink = "https://idleberg.github.io/NSIS.docset/Contents/Resources/Documents/html/" + data.parent + "/" + data.prettyName + ".md";
-        data.ghLink = "https://github.com/NSIS-Dev/Documentation/edit/master/" + data.parent + "/" + data.prettyName + ".md";
-
+        data.webLink = "https://idleberg.github.io/NSIS.docset/Contents/Resources/Documents/html/" + data.relativePath + ".md";
+        data.ghLink = "https://github.com/NSIS-Dev/Documentation/edit/master/" + data.relativePath + ".md";
 
         // we will pass data to the Handlebars template to create the actual HTML to use
         html = template(data);
@@ -207,7 +206,7 @@ function transformDocs(filePath) {
     data.dirName = path.dirname(filePath.replace(path.join(__dirname, 'node_modules/nsis-docs'), 'html'));
     data.prettyName = path.basename(filePath, path.extname(filePath));
 
-    data.pageTitle = [ 'NSIS.docset' ]
+    data.pageTitle = [ 'NSIS.docset' ];
 
     if (data.dirName.endsWith('Callbacks') && data.prettyName.startsWith("on")) {
             data.name = "." + data.prettyName;
