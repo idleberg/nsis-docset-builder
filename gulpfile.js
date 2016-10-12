@@ -212,18 +212,23 @@ function transformDocs(filePath) {
     if (data.dirName.endsWith('Callbacks') && data.prettyName.startsWith("on")) {
             data.name = "." + data.prettyName;
             data.type = "Function";
+            data.pageTitle.push(data.bundle);
         } else if (data.dirName.endsWith('Callbacks') && data.prettyName.startsWith("un.on")) {
             data.name = data.prettyName;
             data.type = "Function";
+            data.pageTitle.push(data.bundle);
         } else if (data.prettyName.startsWith("__") && data.prettyName.endsWith("__")) {
             data.name = "${" + data.prettyName + "}";
             data.type = "Constant";
+            data.pageTitle.push(data.bundle);
         } else if (data.prettyName.startsWith("NSIS") && data.dirName.endsWith('Variables')) {
             data.name = "${" + data.prettyName + "}";
             data.type = "Constant";
+            data.pageTitle.push(data.bundle);
         }  else if (data.dirName.endsWith('Variables')) {
             data.name = "$" + data.prettyName;
             data.type = "Variable";
+            data.pageTitle.push(data.bundle);
         } else if (data.dirName.startsWith('html/Includes')) {
             data.name = "${" + data.prettyName + "}";
             data.type = "Library";
@@ -232,6 +237,7 @@ function transformDocs(filePath) {
         } else {
             data.name = data.prettyName;
             data.type = "Command";
+            data.pageTitle.push(data.bundle);
         }
 
         data.pageTitle.push(data.name);
