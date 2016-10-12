@@ -206,7 +206,7 @@ function transformDocs(filePath) {
     data.dirName = path.dirname(filePath.replace(path.join(__dirname, 'node_modules/nsis-docs'), 'html'));
     data.prettyName = path.basename(filePath, path.extname(filePath));
 
-    data.pageTitle = [ 'NSIS.docset' ];
+    data.pageTitle = [];
     data.bundle = "Core";
 
     if (data.dirName.endsWith('Callbacks') && data.prettyName.startsWith("on")) {
