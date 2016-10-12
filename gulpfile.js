@@ -107,7 +107,6 @@ gulp.task('deploy:static', function () {
         'src/img/logo.svg'
     ])
     .pipe(debug({title: 'deploy:static'}))
-    .pipe(cssmin())
     .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/img/'));
 });
 
@@ -141,16 +140,11 @@ gulp.task('build:css', function () {
 gulp.task('build:db', ['db:init'], function() {
     return gulp.src(docMarkdown)
     .pipe(tap(function(file) {
-        let baseName, cmd, dirName, filePath; 
 
-        filePath = file.path;
-        dirName = path.dirname(filePath.replace(path.join(__dirname, 'node_modules/nsis-docs'), 'html'));
-        baseName = path.basename(filePath, '.md');
-
-        cmd = transformDocs(dirName, baseName);
+        let data = transformDocs(file.path);
 
         db.serialize(function() {
-            db.run(`INSERT OR IGNORE INTO searchIndex(name, type, path) VALUES ('${cmd.name}', '${cmd.type}', '${dirName}/${baseName}.html');`);
+            db.run(`INSERT OR IGNORE INTO searchIndex(name, type, path) VALUES ('${data.name}', '${data.type}', '${data.dirName}/${data.prettyName}.html');`);
         });
     }));
 });
@@ -161,7 +155,7 @@ gulp.task('build:db', ['db:init'], function() {
 gulp.task('build:html', function() {
     return gulp.src('src/docset.hbs')
     .pipe(tap(function(file) {
-        let count, data, html, template;
+        let count,  html, template;
         
         template = Handlebars.compile(file.contents.toString());
 
@@ -169,10 +163,12 @@ gulp.task('build:html', function() {
         .pipe(markdown())
         .pipe(tap(function(file) {
 
+        let data = transformDocs(file.path);
+
         // set the contents to the contents property on data
-        data = {
-            contents: file.contents.toString()
-        };
+        data.contents = file.contents.toString();
+        // replace .md links
+        data.contents = data.contents.replace(/\.md\"/gi, '.html"');
 
         if (typeof argv.theme == 'undefined') {
             data.highlightStyle = 'dark';
@@ -180,19 +176,16 @@ gulp.task('build:html', function() {
             data.highlightStyle = argv.theme;
         }
 
-        // replace .md links
-        data.contents = data.contents.replace(/\.md\"/gi, '.html"');
-        data.name = path.basename(file.path, path.extname(file.path));
-
         data.parent = path.dirname(file.path.substr(__filename.length + 1)).replace("/nsis-docs/", "");
         data.version = meta.version;
 
         count = (data.parent.match(/\//g) || []).length + 2;
-
         data.assetDepth = "../".repeat(count);
 
-        data.webLink = "https://idleberg.github.io/NSIS.docset/Contents/Resources/Documents/html/" + data.parent + "/" + data.name + ".md";
-        data.ghLink = "https://github.com/NSIS-Dev/Documentation/edit/master/" + data.parent + "/" + data.name + ".md";
+
+        data.webLink = "https://idleberg.github.io/NSIS.docset/Contents/Resources/Documents/html/" + data.parent + "/" + data.prettyName + ".md";
+        data.ghLink = "https://github.com/NSIS-Dev/Documentation/edit/master/" + data.parent + "/" + data.prettyName + ".md";
+
 
         // we will pass data to the Handlebars template to create the actual HTML to use
         html = template(data);
@@ -208,29 +201,42 @@ gulp.task('build:html', function() {
 
 
 // Transforms all special cases
-function transformDocs(dirName, baseName) {
-    let cmd = [];
+function transformDocs(filePath) {
+    let data = [];
 
-    if (dirName.endsWith('Callbacks') && baseName.startsWith("on")) {
-            cmd.type = "Function";
-            cmd.name = "." + baseName;
-        } else if (dirName.endsWith('Callbacks') && baseName.startsWith("un.on")) {
-            cmd.type = "Function";
-            cmd.name = baseName;
-        } else if (baseName.startsWith("__") && baseName.endsWith("__")) {
-            cmd.type = "Variable";
-            cmd.name = "${" + baseName + "}";
-        }  else if (dirName.endsWith('Variables')) {
-            cmd.type = "Variable";
-            cmd.name = "$" + baseName;
-        } else if (dirName.startsWith('html/Includes')) {
-            cmd.type = "Library";
-            cmd.name = "${" + baseName + "}";
+    data.dirName = path.dirname(filePath.replace(path.join(__dirname, 'node_modules/nsis-docs'), 'html'));
+    data.prettyName = path.basename(filePath, path.extname(filePath));
+
+    data.pageTitle = [ 'NSIS.docset' ]
+
+    if (data.dirName.endsWith('Callbacks') && data.prettyName.startsWith("on")) {
+            data.name = "." + data.prettyName;
+            data.type = "Function";
+        } else if (data.dirName.endsWith('Callbacks') && data.prettyName.startsWith("un.on")) {
+            data.name = data.prettyName;
+            data.type = "Function";
+        } else if (data.prettyName.startsWith("__") && data.prettyName.endsWith("__")) {
+            data.name = "${" + data.prettyName + "}";
+            data.type = "Constant";
+        } else if (data.prettyName.startsWith("NSIS") && data.dirName.endsWith('Variables')) {
+            data.name = "${" + data.prettyName + "}";
+            data.type = "Constant";
+        }  else if (data.dirName.endsWith('Variables')) {
+            data.name = "$" + data.prettyName;
+            data.type = "Variable";
+        } else if (data.dirName.startsWith('html/Includes')) {
+            data.name = "${" + data.prettyName + "}";
+            data.type = "Library";
+            data.pageTitle.push(path.basename(data.dirName) + ".nsh");
         } else {
-            cmd.type = "Command";
-            cmd.name = baseName;
+            data.name = data.prettyName;
+            data.type = "Command";
         }
-        return cmd;
+
+        data.pageTitle.push(data.name);
+        data.pageTitle = data.pageTitle.reverse().join(" | ");
+
+        return data;
 }
 
 
