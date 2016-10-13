@@ -105,7 +105,7 @@ html {
     -webkit-tap-highlight-color: transparent
 }
 body {
-    // Add mobile fonts first, in case anyone is browsing the GitHub hosted pages
+    // Add mobile fonts first, in case anyone is browsing the GitHub-hosted pages
     font-family: -apple-system, Roboto, "Fira Sans", "Segoe UI", "Lucida Sans Unicode", sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
@@ -184,7 +184,7 @@ code {
 }
 code,
 pre {
-    font-family: "Fira Mono", "Fira Mono OT", "Lucida Sans Typewriter", Monaco, "Courier New", monospace
+    font-family: "Fira Mono", "Lucida Sans Typewriter", Monaco, "Courier New", monospace;
 }
 code {
     color: #c7254e;
