@@ -18,7 +18,7 @@ $ git clone https://github.com/idleberg/nsis-docset-builder
 $ cd nsis-docset-builder
 
 # Install dependencies
-$ npm install
+$ yarn || npm install
 
 # Generate docset
 $ gulp
