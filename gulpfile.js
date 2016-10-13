@@ -33,8 +33,10 @@ const docMarkdown = [
 ];
 
 // Tasks
-gulp.task('default', ['deploy:hljs', 'deploy:font', 'deploy:icons', 'deploy:plist', 'deploy:static', 'build:db', 'build:css', 'build:html']);
-
+gulp.task('default', ['deploy', 'build']);
+gulp.task('deploy', ['deploy:hljs', 'deploy:font', 'deploy:icons', 'deploy:plist', 'deploy:static']);
+gulp.task('build', ['build:db', 'build:css', 'build:html']);
+gulp.task('build:html', ['build:docset', 'build:index']);
 
 // Deploy Highlight.js
 gulp.task('deploy:hljs', ['build:hljs'],function () {
@@ -85,13 +87,6 @@ gulp.task('deploy:icons', function () {
 
 // Deploy Mozilla Fira
 gulp.task('deploy:static', function () {
-    gulp.src([
-        'src/index.html'
-    ])
-    .pipe(htmlmin({collapseWhitespace: true}))
-    .pipe(debug({title: 'deploy:static'}))
-    .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/'));
-
     gulp.src([
         'src/css/start.css'
     ])
@@ -150,12 +145,28 @@ gulp.task('build:db', ['db:init'], function() {
 });
 
 
+// Create index page
+gulp.task('build:index', function() {
+    return gulp.src('src/index.hbs')
+    .pipe(tap(function(file) {
+        template = Handlebars.compile(file.contents.toString());
+        html = template(meta);
+        file.contents = new Buffer(html, "utf-8");
+    }))
+    .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(concat('index.html'))
+    .pipe(debug({title: 'build:index'}))
+    .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/'));
+    // }));
+});
+
+
 // Convert Markdown to HTML & compile Handlebars
 // via http://learningwithjb.com/posts/markdown-and-handlebars-to-make-pages
-gulp.task('build:html', function() {
+gulp.task('build:docset', function() {
     return gulp.src('src/docset.hbs')
     .pipe(tap(function(file) {
-        let count,  html, template;
+        let count, html, template;
         
         template = Handlebars.compile(file.contents.toString());
 
@@ -193,7 +204,7 @@ gulp.task('build:html', function() {
         file.contents = new Buffer(html, "utf-8");
     }))
     .pipe(htmlmin({collapseWhitespace: true}))
-    .pipe(debug({title: 'build:html'}))
+    .pipe(debug({title: 'build:docset'}))
     .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/html/'));
     }));
 });
