@@ -106,7 +106,7 @@ html {
 }
 body {
     // Add mobile fonts first, in case anyone is browsing the GitHub-hosted pages
-    font-family: -apple-system, Roboto, "Fira Sans", "Segoe UI", "Lucida Sans Unicode", sans-serif;
+    font-family: "Fira Sans", "Segoe UI", "Lucida Sans Unicode", -apple-system, Roboto, sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
     color: #444
