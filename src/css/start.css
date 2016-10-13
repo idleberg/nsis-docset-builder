@@ -12,13 +12,6 @@
     font-weight: 400;
     font-style: normal
 }
-@font-face {
-    font-family: 'Fira Mono';
-    src: url(../fonts/FiraMono-Regular.eot);
-    src: local('Fira Mono'), url(../fonts/FiraMono-Regular.eot) format('embedded-opentype'), url(../fonts/FiraMono-Regular.woff2) format('woff2'), url(../fonts/FiraMono-Regular.woff) format('woff'), url(../fonts/FiraMono-Regular.ttf) format('truetype');
-    font-weight: 400;
-    font-style: normal
-}
 .btn {
     vertical-align: middle
 }
@@ -76,11 +69,6 @@ svg:not(:root) {
 .btn:active {
     background-image: none
 }
-@font-face {
-    font-family: 'Glyphicons Halflings';
-    src: url(../fonts/glyphicons-halflings-regular.eot);
-    src: url(../fonts/glyphicons-halflings-regular.eot?#iefix) format('embedded-opentype'), url(../fonts/glyphicons-halflings-regular.woff2) format('woff2'), url(../fonts/glyphicons-halflings-regular.woff) format('woff'), url(../fonts/glyphicons-halflings-regular.ttf) format('truetype'), url(../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format('svg')
-}
 *,
 :after,
 :before {
@@ -93,7 +81,7 @@ html {
     -webkit-tap-highlight-color: transparent
 }
 body {
-    font-family: "Fira Sans", "Fira Sans OT", "Lucida Sans Unicode", system, "Neue Helvetica", sans-serif;
+    font-family: -apple-system, Roboto, "Fira Sans", "Segoe UI", "Lucida Sans Unicode", sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
     color: #444
@@ -108,7 +96,6 @@ a:focus {
     outline-offset: -2px
 }
 h1 {
-    font-family: "Fira Sans", "Fira Sans OT", "Lucida Sans Unicode", system, "Neue Helvetica", sans-serif;
     font-weight: 400;
     line-height: 1.1;
     color: inherit
