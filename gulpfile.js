@@ -147,7 +147,7 @@ gulp.task('build:db', ['db:init'], function() {
 
 // Create index page
 gulp.task('build:index', function() {
-    return gulp.src('src/index.hbs')
+    return gulp.src('src/templates/index.hbs')
     .pipe(tap(function(file) {
         template = Handlebars.compile(file.contents.toString());
         html = template(meta);
@@ -164,7 +164,7 @@ gulp.task('build:index', function() {
 // Convert Markdown to HTML & compile Handlebars
 // via http://learningwithjb.com/posts/markdown-and-handlebars-to-make-pages
 gulp.task('build:docset', function() {
-    return gulp.src('src/docset.hbs')
+    return gulp.src('src/templates/docset.hbs')
     .pipe(tap(function(file) {
         let count, html, template;
         
