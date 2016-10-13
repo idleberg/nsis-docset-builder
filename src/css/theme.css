@@ -105,7 +105,6 @@ html {
     -webkit-tap-highlight-color: transparent
 }
 body {
-    // Add mobile fonts first, in case anyone is browsing the GitHub-hosted pages
     font-family: "Fira Sans", "Segoe UI", "Lucida Sans Unicode", -apple-system, Roboto, sans-serif;
     font-size: 14px;
     line-height: 1.42857143;
