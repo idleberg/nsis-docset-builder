@@ -194,7 +194,7 @@ gulp.task('build:docset', function() {
         count = (data.relativePath.match(/\//g) || []).length + 1;
         data.assetDepth = "../".repeat(count);
 
-        data.webLink = "https://idleberg.github.io/NSIS.docset/Contents/Resources/Documents/html/" + data.relativePath + ".md";
+        data.webLink = "https://idleberg.github.io/NSIS.docset/Contents/Resources/Documents/html/" + data.relativePath + ".html";
         data.ghLink = "https://github.com/NSIS-Dev/Documentation/edit/master/" + data.relativePath + ".md";
 
         // we will pass data to the Handlebars template to create the actual HTML to use
