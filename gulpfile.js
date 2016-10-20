@@ -156,7 +156,15 @@ gulp.task('build:index', function() {
 
 // Minify SVG
 gulp.task('build:svg', function() {
-    return gulp.src("node_modules/nsis-logo-v3/src/Logo/outline-dark.svg")
+    let logo;
+
+    if (typeof argv.logo == 'undefined' || argv.logo === null) {
+        logo = 'outline-dark';
+    } else {
+        logo = argv.logo;
+    }
+
+    return gulp.src(`node_modules/nsis-logo-v3/src/Logo/${logo}.svg`)
     .pipe(cache('generate:svg'))
     .pipe(concat('logo.svg'))
     .pipe(debug({title: 'svgmin:'}))
@@ -185,7 +193,7 @@ gulp.task('build:docset', function() {
         // replace .md links
         data.contents = data.contents.replace(/\.md\"/gi, '.html"');
 
-        if (typeof argv.theme == 'undefined') {
+        if (typeof argv.theme == 'undefined' || argv.theme === null) {
             data.highlightStyle = 'dark';
         } else {
             data.highlightStyle = argv.theme;
