@@ -3,19 +3,20 @@
 const meta = require('./package.json');
 
 // Dependencies
-const gulp = require('gulp');
 const argv = require('yargs').argv;
 const cache = require('gulp-cached');
 const concat = require('gulp-concat');
 const cssmin   = require('gulp-cssmin');
 const debug = require('gulp-debug');
 const fs = require('fs');
+const gulp = require('gulp');
 const Handlebars = require('handlebars');
 const htmlmin = require('gulp-htmlmin');
 const markdown = require('gulp-markdown');
 const mkdirp = require('mkdirp');
 const path = require('path');
 const sqlite3 = require('sqlite3').verbose();
+const svgmin = require('gulp-svgmin');
 const tap = require('gulp-tap');
 
 
@@ -34,8 +35,8 @@ const docMarkdown = [
 
 // Tasks
 gulp.task('default', ['deploy', 'build']);
-gulp.task('deploy', ['deploy:hljs', 'deploy:font', 'deploy:icons', 'deploy:plist', 'deploy:static']);
-gulp.task('build', ['build:db', 'build:css', 'build:html']);
+gulp.task('deploy', ['deploy:hljs', 'deploy:font', 'deploy:icons', 'deploy:plist']);
+gulp.task('build', ['build:db', 'build:css', 'build:html', 'build:svg']);
 gulp.task('build:html', ['build:docset', 'build:index']);
 
 // Deploy Highlight.js
@@ -95,14 +96,6 @@ gulp.task('deploy:static', function () {
     .pipe(debug({title: 'deploy:static'}))
     .pipe(cssmin())
     .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/css/'));
-
-    // TODO: use logo repository
-    gulp.src([
-        'src/img/logo.png',
-        'src/img/logo.svg'
-    ])
-    .pipe(debug({title: 'deploy:static'}))
-    .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/img/'));
 });
 
 
@@ -158,6 +151,17 @@ gulp.task('build:index', function() {
     .pipe(debug({title: 'build:index'}))
     .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/'));
     // }));
+});
+
+
+// Minify SVG
+gulp.task('build:svg', function() {
+    return gulp.src("node_modules/nsis-logo-v3/src/Logo/outline-dark.svg")
+    .pipe(cache('generate:svg'))
+    .pipe(concat('logo.svg'))
+    .pipe(debug({title: 'svgmin:'}))
+    .pipe(svgmin())
+    .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/img/'));
 });
 
 
