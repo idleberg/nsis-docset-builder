@@ -28,7 +28,7 @@
     "mkdirp": "^0.5.1",
     "mozilla-fira-pack": "0.0.1",
     "nsis-docs": "NSIS-Dev/Documentation#master",
-    "nsis-logo-v3": "idleberg/nsis-logo-v3#master",
+    "nsis-logo-v3": "idleberg/nsis-logo-v3#463f0067fc48b4902d8ed77a2b8fc5c3e02dd45a",
     "sqlite3": "^3.1.6",
     "yargs": "^6.0.0"
   }
