@@ -159,7 +159,7 @@ gulp.task('build:svg', function() {
     let logo;
 
     if (typeof argv.logo == 'undefined' || argv.logo === null) {
-        logo = 'outline-dark';
+        logo = 'outlines-dark';
     } else {
         logo = argv.logo;
     }
