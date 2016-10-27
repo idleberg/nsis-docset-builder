@@ -295,7 +295,7 @@ gulp.task('build:hljs', function (done) {
     npmInstall.on('close', function (code) {
         if (0 !== code) throw new Error('npm install exited with ' + code);
 
-        let build = spawn('node', ['tools/build.js', 'css', 'json', 'nsis', 'xml'], opts);
+        let build = spawn('node', ['tools/build.js', 'ini', 'nsis'], opts);
         build.stdout.pipe(process.stdout);
         build.stderr.pipe(process.stderr);
 
