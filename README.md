@@ -8,7 +8,9 @@ Node script to generate [NSIS.docset](https://github.com/idleberg/NSIS.docset)
 
 ## Usage
 
-Actually, a simple `gulpfile.js` is used to generate the docset. Make sure you got [Node 6](nodejs.org) and [Gulp](http://gulpjs.com/) installed, then follow these steps:
+A simple `gulpfile.js` is used to generate the docset. Make sure you got [Node 6](nodejs.org) (or later) and [Gulp](http://gulpjs.com/) installed, then follow these steps:
+
+### Installation
 
 ```bash
 # Clone repository
@@ -17,14 +19,18 @@ $ git clone https://github.com/idleberg/nsis-docset-builder
 # Change directory
 $ cd nsis-docset-builder
 
-# Install dependencies
+# Install dependencies & build docset
 $ yarn || npm install
-
-# Generate docset
-$ gulp
 ```
 
-By default, the generated websites use a dark highlighter theme. Use `gulp --theme light` in the last step to use the light theme. 
+### Upgrade
+
+```bash
+# Update dependencies
+$ yarn upgrade|| npm update
+```
+
+You can manually generate the docset by running `gulp` command. By default, the generated websites use a dark highlighter theme. Use `gulp --theme light` in the last step to use the light theme. 
 
 ## License
 
