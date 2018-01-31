@@ -1964,7 +1964,7 @@ npmlog@^4.0.2:
 
 "nsis-docs@github:NSIS-Dev/Documentation#master":
   version "0.0.0"
-  resolved "https://codeload.github.com/NSIS-Dev/Documentation/tar.gz/1a3c9bdc7646c3c88629299256730d8adfcb569c"
+  resolved "https://codeload.github.com/NSIS-Dev/Documentation/tar.gz/4384d162fa514bc883ef68c5d629790019dece69"
 
 "nsis-logo-v3@github:idleberg/nsis-logo-v3#463f0067fc48b4902d8ed77a2b8fc5c3e02dd45a":
   version "0.0.0"
