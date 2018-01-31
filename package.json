@@ -1,5 +1,5 @@
 {
-  "name": "nsis-docset-builder",
+  "name": "@nsis/docset-builder",
   "version": "0.5.1",
   "description": "Node script to generate NSIS.docset",
   "author": "Jan T. Sott",
@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "font-awesome": "^4.6.3",
-    "gulp": "^3.9.1",
+    "gulp": "^4.0.0",
     "gulp-cached": "^1.1.0",
     "gulp-concat": "^2.6.0",
     "gulp-cssmin": "^0.2.0",
@@ -30,6 +30,6 @@
   },
   "scripts": {
     "build": "gulp && tar --exclude='.DS_Store' -cvzf NSIS.tgz NSIS.docset",
-    "postinstall": "gulp && tar --exclude='.DS_Store' -cvzf NSIS.tgz NSIS.docset"
+    "postinstall": "gulp"
   }
 }
