@@ -1,13 +1,9 @@
 {
   "name": "nsis-docset-builder",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Node script to generate NSIS.docset",
   "author": "Jan T. Sott",
   "license": "MIT",
-  "private": true,
-  "engines": {
-    "node": "^6.0.0"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/idleberg/nsis-docset-builder"
@@ -33,6 +29,7 @@
     "yargs": "^8.0.2"
   },
   "scripts": {
+    "build": "gulp",
     "postinstall": "gulp"
   }
 }
