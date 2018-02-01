@@ -1,6 +1,6 @@
 {
   "name": "@nsis/docset-builder",
-  "version": "0.5.1",
+  "version": "0.5.2",
   "description": "Node script to generate NSIS.docset",
   "author": "Jan T. Sott",
   "license": "MIT",
