@@ -28,9 +28,9 @@ const db = new sqlite3.Database('NSIS.docset/Contents/Resources/docSet.dsidx');
 
 // Specify included Markdown documentation
 const docMarkdown = [
-  '!node_modules/nsis-docs/Plugins/*.md',
+  'node_modules/nsis-docs/**/*.md',
   '!node_modules/nsis-docs/README.md',
-  'node_modules/nsis-docs/**/*.md'
+  '!node_modules/nsis-docs/Plugins/*.md'
 ];
 
 
