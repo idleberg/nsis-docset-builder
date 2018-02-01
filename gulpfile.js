@@ -333,7 +333,7 @@ gulp.task('build', gulp.parallel('build:db', 'build:css', 'build:html', 'build:s
   done();
 }));
 
-gulp.task('deploy', gulp.parallel('deploy:hljs', 'deploy:font', 'deploy:icons', 'deploy:plist', (done) => {
+gulp.task('deploy', gulp.parallel('deploy:hljs', 'deploy:font', 'deploy:icons', 'deploy:plist', 'deploy:static', (done) => {
   done();
 }));
 
