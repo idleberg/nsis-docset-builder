@@ -1,9 +1,18 @@
+# Project specific
 *.dsidx
 *.sqlite
 *.tgz
-bower_components/
 NSIS.docset/
+
+# Package managers
+bower_components/
 node_modules/
 npm-debug.log*
-todo.md
 vendor/
+
+# We rely on the latest version of the documentation, hence versioning needs
+# be avoided
+package-lock.json
+yarn.lock
+
+todo.md
