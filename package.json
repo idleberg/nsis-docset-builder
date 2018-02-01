@@ -29,7 +29,7 @@
     "yargs": "^8.0.2"
   },
   "scripts": {
-    "build": "gulp && tar --exclude='.DS_Store' -cvzf NSIS.tgz NSIS.docset",
+    "build": "gulp && tar --exclude='.DS_Store' -cvzf build/NSIS.tgz build/NSIS.docset",
     "postinstall": "gulp"
   }
 }
