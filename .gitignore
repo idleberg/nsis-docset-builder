@@ -2,7 +2,7 @@
 *.dsidx
 *.sqlite
 *.tgz
-NSIS.docset/
+build/
 
 # Package managers
 bower_components/
