@@ -21,16 +21,16 @@ const tap = require('gulp-tap');
 
 
 // Create target folder
-mkdirp.sync("NSIS.docset/Contents/Resources/");
+mkdirp.sync("build/NSIS.docset/Contents/Resources/");
 
 // Create database file
-const db = new sqlite3.Database('NSIS.docset/Contents/Resources/docSet.dsidx');
+const db = new sqlite3.Database('build/NSIS.docset/Contents/Resources/docSet.dsidx');
 
 // Specify included Markdown documentation
 const docMarkdown = [
   'node_modules/nsis-docs/**/*.md',
   '!node_modules/nsis-docs/README.md',
-  '!node_modules/nsis-docs/Plugins/*.md'
+  '!node_modules/nsis-docs/Plugins/*/**.md'
 ];
 
 
@@ -70,7 +70,7 @@ gulp.task('deploy:hljs', gulp.series('build:hljs', (done) => {
   .pipe(cache('hljs'))
   .pipe(concat('highlight.min.js'))
   .pipe(debug({title: 'deploy:hljs'}))
-  .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/js/'));
+  .pipe(gulp.dest('build/NSIS.docset/Contents/Resources/Documents/js/'));
 
   done();
 }));
@@ -97,7 +97,7 @@ gulp.task('deploy:font', (done) => {
 
     'node_modules/font-awesome/fonts/*'
   ])
-  .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/fonts/'));
+  .pipe(gulp.dest('build/NSIS.docset/Contents/Resources/Documents/fonts/'));
 
   done();
 });
@@ -109,7 +109,7 @@ gulp.task('deploy:icons', (done) => {
     'src/img/icon.png',
     'src/img/icon@2x.png'
   ])
-  .pipe(gulp.dest('NSIS.docset/'));
+  .pipe(gulp.dest('build/NSIS.docset/'));
 
   done();
 });
@@ -124,7 +124,7 @@ gulp.task('deploy:static', (done) => {
   .pipe(concat('start.min.css'))
   .pipe(debug({title: 'deploy:static'}))
   .pipe(cssmin())
-  .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/css/'));
+  .pipe(gulp.dest('build/NSIS.docset/Contents/Resources/Documents/css/'));
 
   done();
 });
@@ -135,7 +135,7 @@ gulp.task('deploy:plist', (done) => {
   gulp.src([
     'src/Info.plist'
   ])
-  .pipe(gulp.dest('NSIS.docset/Contents/'));
+  .pipe(gulp.dest('build/NSIS.docset/Contents/'));
 
   done();
 });
@@ -153,7 +153,7 @@ gulp.task('build:css', (done) => {
   .pipe(concat('docset.min.css'))
   .pipe(debug({title: 'build:css'}))
   .pipe(cssmin())
-  .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/css/'));
+  .pipe(gulp.dest('build/NSIS.docset/Contents/Resources/Documents/css/'));
 
   done();
 });
@@ -198,7 +198,7 @@ gulp.task('build:index', (done) => {
   .pipe(htmlmin({collapseWhitespace: true}))
   .pipe(concat('index.html'))
   .pipe(debug({title: 'build:index'}))
-  .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/'));
+  .pipe(gulp.dest('build/NSIS.docset/Contents/Resources/Documents/'));
 
   done();
 });
@@ -219,7 +219,7 @@ gulp.task('build:svg', (done) => {
   .pipe(concat('logo.svg'))
   .pipe(debug({title: 'svgmin:'}))
   .pipe(svgmin())
-  .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/img/'));
+  .pipe(gulp.dest('build/NSIS.docset/Contents/Resources/Documents/img/'));
 
   done();
 });
@@ -269,7 +269,7 @@ gulp.task('build:docset', (done) => {
       }))
     .pipe(htmlmin({collapseWhitespace: true}))
     .pipe(debug({title: 'build:docset'}))
-    .pipe(gulp.dest('NSIS.docset/Contents/Resources/Documents/html/'));
+    .pipe(gulp.dest('build/NSIS.docset/Contents/Resources/Documents/html/'));
   }));
 
   done();
