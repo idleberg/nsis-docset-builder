@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "font-awesome": "^4.6.3",
-    "gulp": "^4.0.0",
+    "gulp": "^3.9.1",
     "gulp-cached": "^1.1.0",
     "gulp-concat": "^2.6.0",
     "gulp-cssmin": "^0.2.0",
