@@ -17,6 +17,7 @@
     "gulp-debug": "^3.1.0",
     "gulp-htmlmin": "^4.0.0",
     "gulp-markdown": "^2.0.1",
+    "gulp-rename": "^1.2.2",
     "gulp-svgmin": "^1.2.3",
     "gulp-tap": "^1.0.1",
     "handlebars": "^4.0.10",

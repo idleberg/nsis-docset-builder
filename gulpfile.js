@@ -15,6 +15,7 @@ const htmlmin = require('gulp-htmlmin');
 const markdown = require('gulp-markdown');
 const mkdirp = require('mkdirp');
 const path = require('path');
+const rename = require('gulp-rename');
 const sqlite3 = require('sqlite3').verbose();
 const svgmin = require('gulp-svgmin');
 const tap = require('gulp-tap');
@@ -215,6 +216,9 @@ gulp.task('build:docset', function() {
         file.contents = new Buffer(html, "utf-8");
     }))
     .pipe(htmlmin({collapseWhitespace: true}))
+    .pipe(rename({
+        extname: ".html"
+      }))
     .pipe(debug({title: 'build:docset'}))
     .pipe(gulp.dest('build/NSIS.docset/Contents/Resources/Documents/html/'));
     }));
