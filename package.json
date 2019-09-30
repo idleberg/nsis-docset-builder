@@ -20,7 +20,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-svgmin": "^2.2.0",
     "gulp-tap": "^2.0.0",
-    "handlebars": "^4.0.10",
+    "handlebars": "^4.4.0",
     "highlight.js": "github:isagalaev/highlight.js#9.15.10",
     "mkdirp": "^0.5.1",
     "mozilla-fira-pack": "0.0.1",
