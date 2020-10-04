@@ -32,5 +32,8 @@
   "scripts": {
     "build": "gulp && tar --exclude='.DS_Store' -cvzf build/NSIS.tgz build/NSIS.docset",
     "postinstall": "gulp"
+  },
+  "volta": {
+    "node": "8.17.0"
   }
 }
