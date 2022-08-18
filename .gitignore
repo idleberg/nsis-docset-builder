@@ -2,17 +2,15 @@
 *.dsidx
 *.sqlite
 *.tgz
-build/
+.build/
 
 # Package managers
 bower_components/
 node_modules/
 npm-debug.log*
-vendor/
-
-# We rely on the latest version of the documentation, hence versioning needs
-# be avoided
 package-lock.json
+vendor/
 yarn.lock
 
+# Project specific
 todo.md
