@@ -9,31 +9,22 @@
     "url": "git+https://github.com/idleberg/nsis-docset-builder"
   },
   "devDependencies": {
-    "font-awesome": "^4.6.3",
-    "gulp": "^3.9.1",
-    "gulp-cached": "^1.1.0",
-    "gulp-concat": "^2.6.0",
-    "gulp-cssmin": "^0.2.0",
-    "gulp-debug": "^4.0.0",
-    "gulp-htmlmin": "^5.0.1",
-    "gulp-markdown": "^5.0.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-svgmin": "^2.2.0",
-    "gulp-tap": "^2.0.0",
-    "handlebars": "^4.4.0",
-    "highlight.js": "github:isagalaev/highlight.js#9.15.10",
-    "mkdirp": "^0.5.1",
-    "mozilla-fira-pack": "0.0.1",
-    "nsis-docs": "github:NSIS-Dev/Documentation#master",
-    "nsis-logo-v3": "github:idleberg/nsis-logo-v3#463f0067fc48b4902d8ed77a2b8fc5c3e02dd45a",
-    "sqlite3": "^3.1.6",
-    "yargs": "^14.0.0"
+    "@mozilla/fira": "github:mozilla/Fira",
+    "@nsis/docs": "^0.2.1",
+    "@nsis/logo": "github:idleberg/nsis-logo",
+    "ejs": "^3.1.8",
+    "globby": "^13.1.2",
+    "highlight.js": "^11.6.0",
+    "html-minifier-terser": "^7.0.0-beta.0",
+    "log-symbols": "^5.1.0",
+    "marked": "^4.0.18",
+    "sqlite3": "^5.0.10"
   },
   "scripts": {
-    "build": "gulp && tar --exclude='.DS_Store' -cvzf build/NSIS.tgz build/NSIS.docset",
-    "postinstall": "gulp"
+    "build": "node bin/build.mjs",
+    "package": "tar --exclude='.DS_Store' -cvzf build/NSIS.tgz build/NSIS.docset"
   },
   "volta": {
-    "node": "8.17.0"
+    "node": "16.16.0"
   }
 }
