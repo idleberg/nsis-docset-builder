@@ -10,13 +10,8 @@ import path from 'node:path';
 import sqlite3 from 'sqlite3';
 
 const __dirname = path.resolve(path.dirname(''));
-const docsetDir = path.resolve(__dirname, '.build/NSIS.docset');
-const contentsDir = path.resolve(__dirname, `${docsetDir}/Contents/`);
-const resourcesDir = path.resolve(__dirname, `${contentsDir}/Resources/`);
-const documentsDir = path.resolve(resourcesDir, 'Documents');
+const Dir = getPaths();
 let db;
-
-console.log({documentsDir})
 
 const htmlMinifyOptions = {
     collapseWhitespace: true,
@@ -25,7 +20,7 @@ const htmlMinifyOptions = {
 };
 
 marked.setOptions({
-    baseUrl: path.relative(documentsDir, path.resolve(documentsDir, 'html')),
+    baseUrl: path.relative(Dir.documents, path.resolve(Dir.documents, 'html')),
     highlight: code => hljs.highlight(code, {language: 'nsis'}).value
 });
 
@@ -35,13 +30,13 @@ await copyStaticFiles();
 
 async function initTable() {
     try {
-        await fs.rm(resourcesDir, { force: true, recursive: true });
-        await fs.mkdir(resourcesDir, { recursive: true });
+        await fs.rm(Dir.docset, { force: true, recursive: true });
+        await fs.mkdir(Dir.resources, { recursive: true });
     } catch (e) {
         console.warn('Could not create build directory');
     }
 
-    db = new sqlite3.Database(path.resolve(resourcesDir, 'docSet.dsidx'));
+    db = new sqlite3.Database(path.resolve(Dir.resources, 'docSet.dsidx'));
 
     db.serialize(function() {
         db.run("DROP TABLE IF EXISTS searchIndex;");
@@ -57,18 +52,18 @@ async function createPages() {
     const { version } = JSON.parse(await fs.readFile('./package.json', 'utf8'));
 
     filePaths.forEach(async filePath => {
+        const relativeDocsPath = path.dirname(path.relative('node_modules/@nsis/docs/docs', filePath));
+        const outPath = `${Dir.documents}/html/${relativeDocsPath}`;
+
         const markdownContent = await fs.readFile(filePath, 'utf8');
         const htmlContent = marked.parse(markdownContent).replaceAll(/\.md/g, '.html');
         const minifiedContent = await minify(render(template, {
             version: version,
             ghLink: 'x.x.x',
             pageTitle: 'YOLO',
-            contents: htmlContent
+            contents: htmlContent,
+            relativeAssetsDir: path.relative(outPath, Dir.documents)
         }), htmlMinifyOptions);
-
-        const relativeDocsPath = path.dirname(path.relative('node_modules/@nsis/docs/docs', filePath));
-        const outPath = `${docsetDir}/Contents/Resources/Documents/html/${relativeDocsPath}`;
-        // console.log(getFile(filePath))
 
         try {
             await fs.mkdir(outPath, { recursive: true });
@@ -83,21 +78,7 @@ async function createPages() {
         );
 
         await fs.writeFile(outFile, minifiedContent);
-        // console.log({
-        //     filePath,
-        //     dirname: path.dirname(filePath),
-        //     type: getType(filePath),
-        // });
-        const relativePath = path.relative(path.resolve(resourcesDir, 'Documents'), outFile);
-
-        // console.log({
-        //     filePath,
-        //     outFile,
-        //     relativePath
-        // })
-
-        // getType(filePath);
-        // console.log((`INSERT OR IGNORE INTO searchIndex(name, type, path) VALUES ('${getFile(filePath).name}', '${getType(filePath)}', '${relativePath}');`));
+        const relativePath = path.relative(path.resolve(Dir.resources, 'Documents'), outFile);
 
         db.serialize(function() {
             db.run(`INSERT OR IGNORE INTO searchIndex(name, type, path) VALUES ('${getFile(filePath).name}', '${getType(filePath)}', '${relativePath}');`);
@@ -106,9 +87,9 @@ async function createPages() {
 }
 
 async function copyStaticFiles() {
-    await fs.copyFile(path.resolve(__dirname, 'src/static/icon.png'), `${docsetDir}/icon.png`);
-    await fs.copyFile(path.resolve(__dirname, 'src/static/icon@2x.png'),  `${docsetDir}/icon@2x.png`);
-    await fs.copyFile(path.resolve(__dirname, 'src/static/Info.plist'),  `${contentsDir}/Info.plist`);
+    await fs.copyFile(path.resolve(__dirname, 'src/static/icon.png'), `${Dir.docset}/icon.png`);
+    await fs.copyFile(path.resolve(__dirname, 'src/static/icon@2x.png'),  `${Dir.docset}/icon@2x.png`);
+    await fs.copyFile(path.resolve(__dirname, 'src/static/Info.plist'),  `${Dir.contents}/Info.plist`);
 
     const fonts = [
         'FiraMono-Regular.eot',
@@ -122,7 +103,7 @@ async function copyStaticFiles() {
         'FiraSans-Regular.woff2'
     ];
 
-    const fontsDir = path.resolve(`${documentsDir}/fonts`);
+    const fontsDir = path.resolve(`${Dir.documents}/fonts`);
     await fs.mkdir(fontsDir, { recursive: true });
 
     Promise.all(fonts.map(async font => {
@@ -185,4 +166,20 @@ function getFile(filePath) {
                 fileName: baseName
             };
     }   
+}
+
+function getPaths() {
+    const output = path.resolve(__dirname, '.build');
+    const docset = path.resolve(output, 'NSIS.docset');
+    const contents = path.resolve(docset, 'Contents');
+    const resources = path.resolve(contents, 'Resources');
+    const documents = path.resolve(resources, 'Documents');
+
+    return {
+        output,
+        docset,
+        contents,
+        resources,
+        documents
+    };
 }
