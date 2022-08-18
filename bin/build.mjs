@@ -55,14 +55,17 @@ async function createPages() {
         const relativeDocsPath = path.dirname(path.relative('node_modules/@nsis/docs/docs', filePath));
         const outPath = `${Dir.documents}/html/${relativeDocsPath}`;
 
+        const { canonicalName, fileName } = getFile(filePath);
+        console.log( { canonicalName, fileName, filePath } );
+
         const markdownContent = await fs.readFile(filePath, 'utf8');
         const htmlContent = marked.parse(markdownContent).replaceAll(/\.md/g, '.html');
         const minifiedContent = await minify(render(template, {
             version: version,
             ghLink: 'x.x.x',
-            pageTitle: 'YOLO',
+            pageTitle: canonicalName,
             contents: htmlContent,
-            relativeAssetsDir: path.relative(outPath, Dir.documents)
+            relativeAssets: path.relative(outPath, Dir.documents)
         }), htmlMinifyOptions);
 
         try {
@@ -74,7 +77,7 @@ async function createPages() {
         const outFile = path.resolve(
             __dirname,
             outPath,
-            path.basename(getFile(filePath).fileName) + '.html'
+            path.basename(canonicalName) + '.html'
         );
 
         await fs.writeFile(outFile, minifiedContent);
@@ -143,26 +146,26 @@ function getFile(filePath) {
     switch(true) {
         case filePath.includes('/Callbacks/') && baseName.startsWith('on'):
             return {
-                name: `.${baseName}`,
+                canonicalName: `.${baseName}`,
                 fileName: baseName
             };
 
         case filePath.includes('/Includes/'):
         case filePath.includes('/Variables/') && path.basename(filePath).startsWith('__'):
             return {
-                name: `$\{${baseName}\}`,
+                canonicalName: `$\{${baseName}\}`,
                 fileName: baseName
             };
 
         case filePath.includes('/Variables/'):
             return {
-                name: `$${baseName}`,
+                canonicalName: `$${baseName}`,
                 fileName: baseName
             };
 
         default:
             return {
-                name: baseName,
+                canonicalName: baseName,
                 fileName: baseName
             };
     }   
