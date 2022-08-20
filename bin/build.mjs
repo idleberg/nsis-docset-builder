@@ -58,7 +58,6 @@ async function createPages() {
         const outPath = `${Dir.documents}/html/${relativeDocsPath}`;
 
         const { canonicalName, fileName } = getFile(filePath);
-        console.log( { canonicalName, fileName, filePath, relativeDocsPath } );
 
         const markdownContent = await fs.readFile(filePath, 'utf8');
         const htmlContent = marked.parse(markdownContent).replaceAll(/\.md/g, '.html');
