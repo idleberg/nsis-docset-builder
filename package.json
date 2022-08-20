@@ -16,9 +16,10 @@
     "globby": "^13.1.2",
     "highlight.js": "^11.6.0",
     "html-minifier-terser": "^7.0.0-beta.0",
-    "log-symbols": "^5.1.0",
     "marked": "^4.0.18",
-    "sqlite3": "^5.0.10"
+    "ora": "^6.1.2",
+    "sqlite3": "^5.0.10",
+    "tailwindcss": "^3.1.8"
   },
   "scripts": {
     "build": "node bin/build.mjs",
