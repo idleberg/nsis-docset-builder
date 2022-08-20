@@ -56,13 +56,13 @@ async function createPages() {
         const outPath = `${Dir.documents}/html/${relativeDocsPath}`;
 
         const { canonicalName, fileName } = getFile(filePath);
-        console.log( { canonicalName, fileName, filePath } );
+        console.log( { canonicalName, fileName, filePath, relativeDocsPath } );
 
         const markdownContent = await fs.readFile(filePath, 'utf8');
         const htmlContent = marked.parse(markdownContent).replaceAll(/\.md/g, '.html');
         const minifiedContent = await minify(render(template, {
-            version: version,
-            ghLink: 'x.x.x',
+            version: version?.length ? `v${version}` : 'dev',
+            ghLink: `https://github.com/NSIS-Dev/Documentation/edit/main/docs/${relativeDocsPath}/${fileName}.md`,    
             pageTitle: canonicalName,
             contents: htmlContent,
             relativeAssets: path.relative(outPath, Dir.documents)
