@@ -11,6 +11,7 @@ import sqlite3 from 'sqlite3';
 
 const __dirname = path.resolve(path.dirname(''));
 const Dir = getPaths();
+const { version } = JSON.parse(await fs.readFile('./package.json', 'utf8'));
 let db;
 
 const htmlMinifyOptions = {
@@ -27,6 +28,7 @@ marked.setOptions({
 await initTable();
 await createPages();
 await copyStaticFiles();
+await createIndex()
 
 async function initTable() {
     try {
@@ -49,7 +51,6 @@ async function createPages() {
     const docsPath = path.resolve(__dirname, 'node_modules/@nsis/docs/**/*.md');
     const filePaths = await globby([docsPath, '!**/*README.md']);
     const template = await fs.readFile(path.resolve(__dirname, 'src/templates/docset.ejs'), 'utf8');
-    const { version } = JSON.parse(await fs.readFile('./package.json', 'utf8'));
 
     filePaths.forEach(async filePath => {
         const relativeDocsPath = path.dirname(path.relative('node_modules/@nsis/docs/docs', filePath));
@@ -89,10 +90,33 @@ async function createPages() {
     });
 }
 
+async function createIndex() {
+    const template = await fs.readFile(path.resolve(__dirname, 'src/templates/index.ejs'), 'utf8');
+
+    const minifiedContent = await minify(render(template, {
+        version: version?.length ? `v${version}` : 'dev'
+    }), htmlMinifyOptions);
+
+    const outFile = path.resolve(
+        Dir.documents,
+        'index.html'
+    );
+
+    await fs.writeFile(outFile, minifiedContent);
+}
+
 async function copyStaticFiles() {
+    const fontsDir = path.resolve(`${Dir.documents}/fonts`);
+    await fs.mkdir(fontsDir, { recursive: true });
+
+    const imgDir = path.resolve(`${Dir.documents}/img`);
+    await fs.mkdir(imgDir, { recursive: true });
+
     await fs.copyFile(path.resolve(__dirname, 'src/static/icon.png'), `${Dir.docset}/icon.png`);
     await fs.copyFile(path.resolve(__dirname, 'src/static/icon@2x.png'),  `${Dir.docset}/icon@2x.png`);
     await fs.copyFile(path.resolve(__dirname, 'src/static/Info.plist'),  `${Dir.contents}/Info.plist`);
+    await fs.mkdir(fontsDir, { recursive: true });
+    await fs.copyFile(path.resolve(__dirname, 'node_modules/@nsis/logo/dist/Logo/outlines-light.svg'),  `${imgDir}/logo.svg`);
 
     const fonts = [
         'FiraMono-Regular.eot',
@@ -105,9 +129,6 @@ async function copyStaticFiles() {
         'FiraSans-Regular.ttf',
         'FiraSans-Regular.woff2'
     ];
-
-    const fontsDir = path.resolve(`${Dir.documents}/fonts`);
-    await fs.mkdir(fontsDir, { recursive: true });
 
     Promise.all(fonts.map(async font => {
         const extension = path.extname(font).replace(/^\./, '');
