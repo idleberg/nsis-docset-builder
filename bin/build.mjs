@@ -16,6 +16,7 @@ let db;
 
 const htmlMinifyOptions = {
     collapseWhitespace: true,
+    minifyCSS: true,
     removeAttributeQuotes: true,
     removeComments: true
 };
