@@ -95,7 +95,8 @@ async function createIndex() {
     const template = await fs.readFile(path.resolve(__dirname, 'src/templates/index.ejs'), 'utf8');
 
     const minifiedContent = await minify(render(template, {
-        version: version?.length ? `v${version}` : 'dev'
+        version: version?.length ? `v${version}` : 'dev',
+        xmlFeed: encodeURIComponent('http://nsis-dev.github.io/Docset-Feed/NSIS.xml')
     }), htmlMinifyOptions);
 
     const outFile = path.resolve(
