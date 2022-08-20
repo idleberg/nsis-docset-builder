@@ -78,7 +78,7 @@ async function createPages() {
         const outFile = path.resolve(
             __dirname,
             outPath,
-            path.basename(canonicalName) + '.html'
+            path.basename(fileName) + '.html'
         );
 
         await fs.writeFile(outFile, minifiedContent);
