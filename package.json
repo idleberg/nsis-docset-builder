@@ -28,7 +28,7 @@
     "build:docset": "node bin/build.mjs",
     "dev:css": "tailwindcss -i ./src/css/theme.css -o ./.build/NSIS.docset/Contents/Resources/Documents/css/theme.css --watch",
     "dev": "npm-run-all --parallel dev:*",
-    "package": "tar --exclude='.DS_Store' -cvzf build/NSIS.tgz build/NSIS.docset"
+    "package": "tar --exclude='.DS_Store' -cvzf .build/NSIS.tgz .build/NSIS.docset"
   },
   "volta": {
     "node": "18.7.0"
