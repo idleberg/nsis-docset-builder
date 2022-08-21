@@ -113,7 +113,7 @@ async function createIndex() {
 
         const minifiedContent = await minify(render(template, {
             version: version?.length ? `v${version}` : 'dev',
-            xmlFeed: encodeURIComponent('http://nsis-dev.github.io/Docset-Feed/NSIS.xml')
+            xmlFeed: encodeURIComponent('http://nsis-dev.github.io/Docset-Feed/NSIS.xml'),
         }), htmlMinifyOptions);
 
         const outFile = path.resolve(
@@ -141,7 +141,7 @@ async function copyStaticFiles() {
         const cssDir = path.resolve(`${Dir.documents}/css`);
         await fs.mkdir(cssDir, { recursive: true });
 
-        await fs.copyFile(path.resolve(__dirname, 'src/css/theme.css'), `${Dir.documents}/css/theme.css`);
+        await fs.copyFile(path.resolve(__dirname, 'src/css/highlight.css'), `${Dir.documents}/css/highlight.css`);
         await fs.copyFile(path.resolve(__dirname, 'src/static/icon.png'), `${Dir.docset}/icon.png`);
         await fs.copyFile(path.resolve(__dirname, 'src/static/icon@2x.png'),  `${Dir.docset}/icon@2x.png`);
         await fs.copyFile(path.resolve(__dirname, 'src/static/Info.plist'),  `${Dir.contents}/Info.plist`);

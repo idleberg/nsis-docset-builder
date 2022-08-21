@@ -1,392 +1,79 @@
-/*!
- * Bootstrap v3.3.7 (http://getbootstrap.com)
- * Copyright 2011-2016 Twitter, Inc.
- * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
- */
-/*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-.btn {
-    vertical-align: middle
-}
-hr {
-    border: 0
-}
-body {
-    margin: 0
-}
-.col-xs-12 {
-    float: left
-}
-.btn,
-pre {
-    -moz-user-select: none
-}
-html {
-    font-family: sans-serif;
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%
-}
-a {
-    background-color: transparent
-}
-a:active,
-a:hover {
-    outline: 0
-}
-strong {
-    font-weight: 700
-}
-h1 {
-    margin: .67em 0
-}
-hr {
-    -webkit-box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    box-sizing: content-box;
-    height: 0
-}
-pre {
-    overflow: auto
-}
-code,
-pre {
-    font-size: 1em
-}
-/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */
 
-@media print {
-    pre {
-        page-break-inside: avoid
+@layer base {
+    @font-face {
+        font-family: 'Fira Sans';
+        src: url(../../fonts/FiraSans-Light.eot);
+        src: local('Fira Sans Light'),
+             url(../../fonts/FiraSans-Light.eot) format('embedded-opentype'),
+             url(../../fonts/FiraSans-Light.woff2) format('woff2'),
+             url(../../fonts/FiraSans-Light.ttf) format('truetype');
+        font-weight: 300;
+        font-style: normal;
+        font-display: swap;
     }
-    *,
-    :after,
-    :before {
-        background: 0 0!important;
-        color: #000!important;
-        -webkit-box-shadow: none!important;
-        box-shadow: none!important;
-        text-shadow: none!important
+    @font-face {
+        font-family: 'Fira Sans';
+        src: url(../../fonts/FiraSans-Regular.eot);
+        src: local('Fira Sans Regular'),
+             url(../../fonts/FiraSans-Regular.eot) format('embedded-opentype'),
+             url(../../fonts/FiraSans-Regular.woff2) format('woff2'),
+             url(../../fonts/FiraSans-Regular.ttf) format('truetype');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
     }
-    a,
-    a:visited {
-        text-decoration: underline
+    @font-face {
+        font-family: 'Fira Mono';
+        src: url(../../fonts/FiraMono-Regular.eot);
+        src: local('Fira Mono'),
+             url(../../fonts/FiraMono-Regular.eot) format('embedded-opentype'),
+             url(../../fonts/FiraMono-Regular.woff2) format('woff2'),
+             url(../../fonts/FiraMono-Regular.woff) format('woff'), 
+             url(../../fonts/FiraMono-Regular.ttf) format('truetype');
+        font-weight: 400;
+        font-style: normal;
+        font-display: swap;
     }
-    a[href]:after {
-        content: " (" attr(href) ")"
+    
+    body {
+        @apply font-light;
     }
-    pre {
-        border: 1px solid #999
+
+    h1 {
+        @apply text-2xl font-normal;
     }
-    h2,
-    h3,
-    p {
-        orphans: 3;
-        widows: 3
+
+    h2 {
+        @apply text-xl font-normal;
     }
-    h2,
+
     h3 {
-        page-break-after: avoid
+        @apply text-lg font-normal;
     }
-}
-.btn,
-.btn-default:active,
-.btn:active {
-    background-image: none
-}
-*,
-:after,
-:before {
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box
-}
-html {
-    font-size: 10px;
-    -webkit-tap-highlight-color: transparent
-}
-body {
-    font-family: "Fira Sans", "Segoe UI", "Lucida Sans Unicode", -apple-system, Roboto, sans-serif;
-    font-size: 14px;
-    line-height: 1.42857143;
-    color: #444
-}
-a:focus,
-a:hover {
-    color: #444;
-    text-decoration: underline
-}
-a:focus {
-    outline: -webkit-focus-ring-color auto 5px;
-    outline-offset: -2px
-}
-hr {
-    margin-top: 20px;
-    margin-bottom: 20px;
-    border-top: 1px solid #b4bcc2
-}
-h1,
-h2,
-h3 {
-    font-weight: 400;
-    line-height: 1.1;
-    color: inherit
-}
-h1,
-h2,
-h3 {
-    margin-top: 20px;
-    margin-bottom: 10px
-}
-h1 {
-    font-size: 36px
-}
-h2 {
-    font-size: 30px
-}
-h3 {
-    font-size: 24px
-}
-p {
-    margin: 0 0 10px
-}
-pre {
-    line-height: 1.42857143
-}
-.text-right {
-    text-align: right
-}
-pre code {
-    background-color: transparent
-}
-ul {
-    margin-top: 0
-}
-ul {
-    margin-bottom: 10px
-}
-pre {
-    display: block
-}
-@media (min-width: 768px) {
-    .container {
-        width: 750px
+
+    a {
+        @apply text-blue-600 underline;
     }
-}
-.container:after,
-.row:after {
-    clear: both
-}
-code {
-    padding: 2px 4px;
-    font-size: 90%
-}
-code,
-pre {
-    font-family: "Fira Mono", "Lucida Sans Typewriter", Monaco, "Courier New", monospace;
-}
-code {
-    color: #c7254e;
-    background-color: #f9f2f4
-}
-pre {
-    margin: 0 0 10px;
-    font-size: 13px;
-    word-break: break-all;
-    word-wrap: break-word;
-    color: #7b8a8b;
-    background-color: #ecf0f1;
-    border: 1px solid #ccc
-}
-.container {
-    margin-right: auto;
-    margin-left: auto
-}
-pre code {
-    padding: 0;
-    color: inherit;
-    white-space: pre-wrap;
-    border-radius: 0
-}
-.container {
-    padding-left: 15px;
-    padding-right: 15px
-}
-@media (min-width: 992px) {
-    .container {
-        width: 970px
+
+    h1, h2, h3, p, pre {
+        @apply mb-4;
     }
-}
-@media (min-width: 1200px) {
-    .container {
-        width: 1170px
+
+    /* Custom classes */
+    
+    .btn-primary {
+        @apply bg-emerald-500 hover:bg-white hover:text-emerald-500 p-3 mx-1 text-white rounded-full no-underline;
     }
-}
-.row {
-    margin-left: -15px;
-    margin-right: -15px
-}
-.col-xs-12 {
-    position: relative;
-    min-height: 1px;
-    padding-left: 15px;
-    padding-right: 15px
-}
-.col-xs-12 {
-    width: 100%
-}
-.btn {
-    display: inline-block;
-    margin-bottom: 0;
-    font-weight: 400;
-    text-align: center;
-    -ms-touch-action: manipulation;
-    touch-action: manipulation;
-    cursor: pointer;
-    border: 1px solid transparent;
-    white-space: nowrap;
-    padding: 10px 15px;
-    font-size: 14px;
-    line-height: 1.42857143;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none
-}
-.btn:active:focus,
-.btn:focus {
-    outline: -webkit-focus-ring-color auto 5px;
-    outline-offset: -2px
-}
-.btn:focus,
-.btn:hover {
-    color: #fff;
-    text-decoration: none
-}
-.btn:active {
-    outline: 0;
-    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
-    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125)
-}
-.btn-default {
-    border-color: #ccc
-}
-.btn-default:focus {
-    color: #fff;
-    background-color: #b3b3b3;
-    border-color: #8c8c8c
-}
-.btn-default:active,
-.btn-default:hover {
-    color: #fff;
-    background-color: #b3b3b3;
-    border-color: #adadad
-}
-.btn-default:active:focus,
-.btn-default:active:hover {
-    color: #fff;
-    background-color: #a1a1a1;
-    border-color: #8c8c8c
-}
-.btn-sm {
-    padding: 6px 9px;
-    font-size: 12px;
-    line-height: 1.5;
-    border-radius: 15px
-}
-.container:after,
-.container:before,
-.row:after,
-.row:before {
-    content: " ";
-    display: table
-}
-.fa,
-body {
-    -webkit-font-smoothing: subpixel-antialiased
-}
-code,
-pre {
-    border-radius: 0
-}
-@-ms-viewport {
-    width: device-width
-}
-body {
-    font-weight: 300;
-    text-rendering: optimizeLegibility;
-    margin-bottom: 60px
-}
-body {
-    background-color: #fff
-}
-html {
-    position: relative;
-    min-height: 100%
-}
-pre code {
-    font-size: 1.2em
-}
-pre {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    padding: 0
-}
-pre code {
-    -webkit-touch-callout: initial;
-    -webkit-user-select: initial;
-    -khtml-user-select: initial;
-    -moz-user-select: initial;
-    -ms-user-select: initial;
-    user-select: initial;
-    text-rendering: optimizeSpeed
-}
-.btn:active {
-    -webkit-box-shadow: none;
-    box-shadow: none
-}
-.btn {
-    border-width: 0;
-    border-radius: 0
-}
-.btn-default {
-    background-color: #ccc;
-    color: #444
-}
-.btn-default:focus,
-.btn-default:hover {
-    background-color: #b8b8b8
-}
-a,
-a code {
-    text-decoration: underline
-}
-@media (max-width: 767px) {
-    pre {
-        font-size: 11px
+    
+    .btn-secondary {
+        @apply border-2 border-slate-300 hover:border-white p-3 mx-1 text-white rounded-full no-underline;
     }
-    code {
-        padding: 5px
+
+    .gradient {
+        background: linear-gradient(135deg, #cdbfe3 0, #3e333f 100%);
     }
-}
-::-moz-selection {
-    background: #cdbfe3;
-    color: #000
-}
-::selection {
-    background: #cdbfe3;
-    color: #000
-}
-a {
-    color: inherit
-}
-a:hover {
-    color: #6f6171
-}
-a code {
-    color: #c7254e
-}
-a.btn-default {
-    text-decoration: none
 }
