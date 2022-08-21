@@ -98,7 +98,7 @@ async function createPages() {
         const relativePath = path.relative(path.resolve(Dir.resources, 'Documents'), outFile);
 
         db.serialize(function() {
-            db.run(`INSERT OR IGNORE INTO searchIndex(name, type, path) VALUES ('${getFile(filePath).name}', '${getType(filePath)}', '${relativePath}');`);
+            db.run(`INSERT OR IGNORE INTO searchIndex(name, type, path) VALUES ('${canonicalName}', '${getType(filePath)}', '${relativePath}');`);
         });
     });
 
