@@ -15,12 +15,12 @@
     "ejs": "^3.1.8",
     "globby": "^13.1.2",
     "highlight.js": "^11.6.0",
-    "html-minifier-terser": "^7.0.0-beta.0",
-    "marked": "^4.0.18",
+    "html-minifier-terser": "^7.0.0",
+    "marked": "^4.2.0",
     "npm-run-all": "^4.1.5",
     "ora": "^6.1.2",
-    "sqlite3": "^5.0.10",
-    "tailwindcss": "^3.1.8"
+    "sqlite3": "^5.1.2",
+    "tailwindcss": "^3.2.1"
   },
   "scripts": {
     "build": "npm-run-all --serial build:docset build:css",
