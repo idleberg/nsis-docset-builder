@@ -3,7 +3,7 @@
 import { globby } from 'globby';
 import { marked } from 'marked';
 import { minify } from 'html-minifier-terser';
-import { promises as fs } from 'node:fs'; 
+import { promises as fs } from 'node:fs';
 import { render } from 'ejs';
 import hljs from 'highlight.js';
 import ora from 'ora';
@@ -42,10 +42,10 @@ async function initTable() {
     }
 
     const spinner = ora('Initializing database').start();
-    
+
     try {
         db = new sqlite3.Database(path.resolve(Dir.resources, 'docSet.dsidx'));
-    
+
         db.serialize(function() {
             db.run("DROP TABLE IF EXISTS searchIndex;");
             db.run("CREATE TABLE searchIndex(id INTEGER PRIMARY KEY, name TEXT, type TEXT, path TEXT);");
@@ -75,7 +75,7 @@ async function createPages() {
         const htmlContent = marked.parse(markdownContent).replaceAll(/\.md/g, '.html');
         const minifiedContent = (await minify(render(template, {
             version: version?.length ? `v${version}` : 'dev',
-            ghLink: `https://github.com/NSIS-Dev/Documentation/edit/main/docs/${relativeDocsPath}/${fileName}.md`,    
+            ghLink: `https://github.com/NSIS-Dev/Documentation/edit/main/docs/${relativeDocsPath}/${fileName}.md`,
             pageTitle: canonicalName,
             contents: htmlContent,
             relativeAssets: path.relative(outPath, Dir.documents)
@@ -146,7 +146,7 @@ async function copyStaticFiles() {
         await fs.copyFile(path.resolve(__dirname, 'src/static/icon@2x.png'),  `${Dir.docset}/icon@2x.png`);
         await fs.copyFile(path.resolve(__dirname, 'src/static/Info.plist'),  `${Dir.contents}/Info.plist`);
         await fs.mkdir(fontsDir, { recursive: true });
-        await fs.copyFile(path.resolve(__dirname, 'node_modules/@nsis/logo/dist/Logo/outlines-light.svg'),  `${imgDir}/logo.svg`);
+        await fs.copyFile(path.resolve(__dirname, 'node_modules/@nsis/logo/images/Logo/outlines-light.svg'),  `${imgDir}/logo.svg`);
 
         const fonts = [
             'FiraMono-Regular.eot',
@@ -198,7 +198,7 @@ function getType(filePath) {
 
 function getFile(filePath) {
     const baseName = path.basename(filePath, '.md');
-    
+
     switch(true) {
         case filePath.includes('/Callbacks/') && baseName.startsWith('on'):
             return {
@@ -224,7 +224,7 @@ function getFile(filePath) {
                 canonicalName: baseName,
                 fileName: baseName
             };
-    }   
+    }
 }
 
 function getPaths() {
