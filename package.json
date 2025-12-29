@@ -10,7 +10,7 @@
   },
   "devDependencies": {
     "@mozilla/fira": "github:mozilla/Fira",
-    "@nsis/docs": "^0.2.1",
+    "@nsis/docs": "^0.4.0",
     "@nsis/logo": "github:idleberg/nsis-logo",
     "ejs": "^3.1.8",
     "globby": "^13.1.2",
@@ -32,5 +32,10 @@
   },
   "volta": {
     "node": "18.7.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sqlite3"
+    ]
   }
 }
